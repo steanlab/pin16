@@ -24,7 +24,7 @@ Other tags with the same board but another controller work over Bluetooth and re
 
 ## Repository
 - `firmware/` own code (hardware layer, panel and NFC drivers, slots, Bluetooth, OTA, LED), `firmware/BG22Badge.slcp` project for the Silicon Labs Gecko SDK 4.4.1
-- `web/` control page (`index.html`, `sw.js`, manifest, icons)
+- `docs/` control page (`index.html`, `sw.js`, manifest, icons)
 - `tests/host/` tests of the modules on a PC (simulated flash, panel recorder, virtual time, AddressSanitizer)
 - `bootloader/` own Gecko bootloader project for the tags (SDK sample components, pins, build-time patch of the flash driver); no SDK code inside
 - `docs/` user guide, protocol (`PROTOCOL.md`), hardware (pins, panels, NFC), diagnostic build

@@ -1,6 +1,6 @@
 # Notice: what is original and what is not
 
-**Original (GNU GPL v3 or later, see `LICENSE`; the ready-made files of the Releases are on the terms of `LICENSE-RELEASES.md`)**: everything in `firmware/` (hardware layer `hw.*`, NFC `nfc.*`, panel `panel*.c`, drawing `draw.*`, slides `slot.*`, `lz.*`, `pics.*`, Bluetooth `ble_badge.c`, commands, OTA, LED, beacon, settings, ...), `web/`, `tests/`, `docs/`.
+**Original (GNU GPL v3 or later, see `LICENSE`; the ready-made files of the Releases are on the terms of `LICENSE-RELEASES.md`)**: everything in `firmware/` (hardware layer `hw.*`, NFC `nfc.*`, panel `panel*.c`, drawing `draw.*`, slides `slot.*`, `lz.*`, `pics.*`, Bluetooth `ble_badge.c`, commands, OTA, LED, beacon, settings, ...), `tests/`, `docs/` (including the page).
 Since v18 the firmware contains no code of the OpenEPaperLink firmware: the hardware layer, the panel driver (two profiles) and the NFC driver were written from the recordings of real tags (`docs/hardware.md`). The project began as a fork of the slideshow branch of OpenEPaperLink/Tag_FW_EFR32xG22 (CC BY-NC-SA 4.0) and kept that code until v17.
 
 **Not in this repository, used at build time**: Silicon Labs Gecko SDK 4.4.1 (its own licence; the build downloads it), Simplicity Commander and `slc` (downloaded by the `Dockerfile`).

@@ -1,7 +1,7 @@
 # Bluetooth protocol of the tag (firmware v19)
 
 For people who write their own client (an app, a script, Home Assistant). Everything here is read from the firmware sources
-(`firmware/ble_badge.c`, `cmd_set.c`, `slot.c`, `ota.c`, `nfc.c`, `od.c`); the reference client is the page `web/index.html`.
+(`firmware/ble_badge.c`, `cmd_set.c`, `slot.c`, `ota.c`, `nfc.c`, `od.c`); the reference client is the page `docs/index.html`.
 Marks: **[OK]** checked on a real tag, **[code]** read from the code and covered by the host tests, not checked on a tag with a third-party client,
 **[?]** not verified.
 

@@ -3,7 +3,7 @@
 Russian version: `USER_GUIDE.ru.md`.
 
 ## What you need
-A Solum e-paper tag (see the list in `README.md`), a phone or computer with Chrome or Edge (Web Bluetooth), the control page `web/index.html` (published with GitHub Pages or opened from a file).
+A Solum e-paper tag (see the list in `README.md`), a phone or computer with Chrome or Edge (Web Bluetooth), the control page `docs/index.html` (published with GitHub Pages or opened from a file).
 
 ## Connect
 1. Touch the tag with the phone (NFC) or press a button, or power it up. The Bluetooth window is open for 1-2 minutes; the tag flashes blue every 5 s while it waits.
