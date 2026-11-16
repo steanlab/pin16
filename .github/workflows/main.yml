@@ -136,4 +136,9 @@ jobs:
           Page: https://steanlab.github.io/pin16/
           EOF
           sed -i 's/^          //' notes.md
-          gh release create "$TAG" rel/* --title "pin16 $TAG" --notes-file notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # the release was already made on the web page: only add the files
+            gh release upload "$TAG" rel/* --clobber
+          else
+            gh release create "$TAG" rel/* --title "pin16 $TAG" --notes-file notes.md
+          fi
