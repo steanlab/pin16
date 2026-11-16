@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gatt generic_attribute_service="true" out="gatt_db.c" header="gatt_db.h" name="pin16" prefix="gattdb_">
+
+  <service uuid="1800" id="generic_access">
+    <informative>Generic Access</informative>
+    <characteristic uuid="2A00" id="device_name">
+      <value variable_length="true" length="24" type="utf-8">pin16</value>
+      <properties read="true" const="false" write="false" />
+    </characteristic>
+    <characteristic uuid="2A01" const="true">
+      <value type="hex">0000</value>
+      <properties read="true" const="true" />
+    </characteristic>
+  </service>
+
+  <service uuid="b9220000-5c1e-4f6a-9d3b-0a7c6e1f2d40" id="badge">
+    <informative>pin16 control and slide upload</informative>
+    <characteristic uuid="b9220001-5c1e-4f6a-9d3b-0a7c6e1f2d40" id="rx">
+      <description>Commands and data to the badge</description>
+      <value variable_length="true" length="244" type="hex" />
+      <properties write="true" write_no_response="true" />
+    </characteristic>
+    <characteristic uuid="b9220002-5c1e-4f6a-9d3b-0a7c6e1f2d40" id="tx">
+      <description>Responses from the badge</description>
+      <value variable_length="true" length="244" type="hex" />
+      <properties read="true" notify="true" />
+    </characteristic>
+  </service>
+
+  <!-- OpenDisplay: service 0x2446 with one characteristic 0x2446, so that third-party clients (Home Assistant, Toolbox, py-opendisplay) find the tag -->
+  <service uuid="2446" id="opendisplay">
+    <informative>OpenDisplay protocol</informative>
+    <characteristic uuid="2446" id="od_char">
+      <description>OpenDisplay commands (write) and answers (notify)</description>
+      <value variable_length="true" length="244" type="hex" />
+      <properties read="true" write="true" write_no_response="true" notify="true" />
+    </characteristic>
+  </service>
+
+</gatt>

@@ -1,0 +1,50 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+# The bootloader of the BG22Badge tags: Gecko Bootloader, update image in the external SPI flash, one slot at address 0 (236 KB).
+project_name: BG22Badge_BTL
+label: BG22Badge_BTL
+description: |
+  Gecko Bootloader for the Solum EFR32BG22 tags. The firmware update (a GBL file, LZMA compressed, not signed, not encrypted) is stored by the
+  application in the external SPI flash, slot 0 at address 0, 236 KB, and installed by the bootloader after a restart. The flash type is read
+  from its SFDP table. The pins of the flash are in btl_spi_controller_usart_driver_cfg.h.
+category: Example|Bootloader
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [Bootloader]
+- name: Project Difficulty
+  value: [Advanced]
+package: bootloader
+quality: production
+readme:
+- {path: README.md}
+tag: ['hardware:component:memory:spi']
+sdk: {id: gecko_sdk, version: 4.4.1}
+toolchain_settings: []
+
+component:
+- {id: EFR32BG22C224F512IM40}
+- {id: bootloader_aes_sha_ecdsa}
+- {id: bootloader_common_storage_single}
+- {id: bootloader_compression_lzma}
+- {id: bootloader_core}
+- {id: bootloader_crc}
+- {id: bootloader_debug}
+- {id: bootloader_delay_driver}
+- {id: bootloader_image_parser_nonenc}
+- {id: bootloader_spi_controller_driver}
+- {id: bootloader_spiflash_storage_sfdp}
+- {id: bootloader_token_management}
+configuration:
+- {name: BTL_STORAGE_BASE_ADDRESS, value: '0'}
+- {name: SLOT0_ENABLE, value: '1'}
+- {name: SLOT0_START, value: '0'}
+- {name: SLOT0_SIZE, value: '241664'}
+config_file:
+  - path: btl_spi_controller_usart_driver_cfg.h
+    override:
+      component: bootloader_spi_controller_usart_driver
+      file_id: btl_spi_controller_usart_driver_cfg
+define:
+  - name: IS_BOOTLOADER
+    value: "1"

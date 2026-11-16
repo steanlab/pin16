@@ -1,0 +1,155 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+project_name: BG22Badge
+label: BG22Badge
+description: E-paper slideshow badge for EFR32BG22 with Bluetooth LE slide upload.
+quality: development
+readme:
+- {path: readme.md}
+source:
+- {path: main.c}
+- {path: bg22_app.c}
+- {path: hw.c}
+- {path: nfc.c}
+- {path: ndef.c}
+- {path: panel_io.c}
+- {path: panel.c}
+- {path: draw.c}
+- {path: tapgate.c}
+- {path: hwcard.c}
+- {path: ble_badge.c}
+- {path: ext_flash.c}
+- {path: slot.c}
+- {path: lz.c}
+- {path: settings.c}
+- {path: cmd_set.c}
+- {path: sysinfo.c}
+- {path: pics.c}
+- {path: font7x14.c}
+- {path: bthome.c}
+- {path: led.c}
+- {path: ota.c}
+- {path: beacon.c}
+- {path: od.c}
+include:
+- path: ''
+  file_list:
+  - {path: app.h}
+  - {path: hw.h}
+  - {path: nfc.h}
+  - {path: ndef.h}
+  - {path: panel_io.h}
+  - {path: panel.h}
+  - {path: draw.h}
+  - {path: tapgate.h}
+  - {path: hwcard.h}
+  - {path: ble_badge.h}
+  - {path: ext_flash.h}
+  - {path: slot.h}
+  - {path: lz.h}
+  - {path: settings.h}
+  - {path: cmd_set.h}
+  - {path: sysinfo.h}
+  - {path: pics.h}
+  - {path: fwver.h}
+  - {path: bthome.h}
+  - {path: led.h}
+  - {path: ota.h}
+  - {path: beacon.h}
+  - {path: od.h}
+  - {path: sl_iostream_eusart_euart_debug_config.h}
+sdk: {id: gecko_sdk, version: 4.4.1}
+toolchain_settings:
+- {value: size, option: optimize}
+component:
+- {id: EFR32BG22C224F512IM40}
+- {id: bootloader_app_properties}
+- {id: bootloader_interface}
+- {id: brd4001a}
+- {id: brd4402b}
+- {id: cpp_support}
+- {id: device_init}
+- {id: spidrv_core}
+- {id: emlib_iadc}
+- {id: emlib_i2c}
+- {id: emlib_wdog}
+- {id: emlib_timer}
+- {id: emlib_rmu}
+- {id: gpiointerrupt}
+- instance: [euart_debug]
+  id: iostream_eusart
+- {id: iostream_retarget_stdio}
+- {id: iostream_rtt}
+- {id: iostream_stdlib_config}
+- {id: iostream_swo}
+- {id: iostream_usart_core}
+- {id: ls013b7dh03}
+- {id: memlcd_usart}
+- {id: mpu}
+- {id: nvm3_default}
+- {id: nvm3_default_config}
+- {id: power_manager} 
+- {id: sl_system}
+- {id: toolchain_gcc_lto}
+- {id: bluetooth_stack}
+- {id: bluetooth_feature_connection}
+- {id: bluetooth_feature_gatt}
+- {id: bluetooth_feature_gatt_server}
+- {id: bluetooth_feature_legacy_advertiser}
+- {id: bluetooth_feature_sm}
+- {id: bluetooth_feature_system}
+- {id: gatt_configuration}
+template_contribution:
+- {name: memory_ram_start, priority: 0, value: 536870912}
+- {name: memory_ram_size, priority: 0, value: 32768}
+- {name: memory_flash_start, priority: 0, value: 24576}
+- {name: memory_flash_size, priority: 0, value: 335872}
+configuration:
+- {name: SL_STACK_SIZE, value: '4096'}
+- {name: SL_HEAP_SIZE, value: '9200'}
+- {name: NVM3_DEFAULT_NVM_SIZE, value: '24576'}
+- {name: SL_BOARD_ENABLE_VCOM, value: '0'}
+- {name: SL_BOARD_ENABLE_DISPLAY, value: '0'}
+- {name: SL_BOARD_ENABLE_SENSOR_RHT, value: '0'}
+- {name: SL_BOARD_DISABLE_MEMORY_SPI, value: '0'}
+- {name: SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE, value: usartHwFlowControlNone}
+- {name: SL_IOSTREAM_EUSART_VCOM_FLOW_CONTROL_TYPE, value: eusartHwFlowControlNone}
+- {name: SL_IOSTREAM_EUSART_EUART_DEBUG_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION, value: '0'}
+- {name: SL_APPLICATION_VERSION, value: '1'}
+- {name: SL_BT_CONFIG_MAX_CONNECTIONS, value: '1'}
+- {name: SL_BT_CONFIG_USER_ADVERTISERS, value: '2'}
+- {name: SL_RAIL_UTIL_PTI_MODE, value: RAIL_PTI_MODE_DISABLED}
+config_file:
+  - override:
+      component: gatt_configuration
+      file_id: gatt_configuration_file_id
+    path: config/btconf/gatt_configuration.btconf
+    directory: btconf
+  - path: sl_iostream_eusart_euart_debug_config.h
+    override:
+      component: iostream_eusart
+      file_id: iostream_eusart_config
+define:
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_PERIPHERAL
+    value: "EUART0"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_PERIPHERAL_NO
+    value: "0"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_TX_PORT
+    value: "gpioPortB"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_TX_PIN
+    value: "5"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_RX_PORT
+    value: "gpioPortB"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_RX_PIN
+    value: "6"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_CTS_PORT
+    value: "gpioPortB"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_CTS_PIN
+    value: "7"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_RTS_PORT
+    value: "gpioPortB"
+  - name: SL_IOSTREAM_EUSART_EUART_DEBUG_RTS_PIN
+    value: "8"
+ui_hints:
+  highlight:
+  - {path: readme.md, focus: true}
+  - {path: config/btconf/gatt_configuration.btconf}
