@@ -1,0 +1,139 @@
+name: Build pin16 firmware
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker builder image
+        run: docker build -t silabs-builder -f Dockerfile .
+
+      - name: Build bootloaders and firmware inside container
+        run: |
+          chmod +x build_all.sh
+          docker run --rm --user 0:0 -v "${{ github.workspace }}:/build" -w /build silabs-builder \
+            sh -c "pip3 install --break-system-packages bincopy jinja2 && ln -sf /usr/bin/python3 /usr/local/bin/python && slc signature trust --sdk /gecko_sdk/ && ./build_all.sh" 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
+
+      - name: Firmware size
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob
+          LIMIT = 335872
+          for p in sorted(glob.glob('firmware/**/*.hex', recursive=True)):
+              total = 0
+              for line in open(p):
+                  line = line.strip()
+                  if line.startswith(':') and line[7:9] == '00':
+                      total += int(line[1:3], 16)
+              print(f"{p}: {total} bytes used, {LIMIT - total} bytes free ({100.0 * total / LIMIT:.1f}% of {LIMIT})")
+          PY
+
+      - name: Memory usage (RAM and flash)
+        if: always()
+        run: |
+          docker run --rm --user 0:0 -v "${{ github.workspace }}:/build" -w /build silabs-builder sh -c '
+            SZ=$(command -v arm-none-eabi-size || find / -name arm-none-eabi-size -type f 2>/dev/null | head -1)
+            ELF=$(find firmware/out -name "BG22Badge.out" | head -1)
+            echo "size tool: $SZ"; echo "elf: $ELF"
+            if [ -n "$SZ" ] && [ -n "$ELF" ]; then
+              $SZ -A "$ELF" > /tmp/size.txt
+              python3 - <<PY
+          ram_total = 32768
+          ram = 0
+          flash = 0
+          for line in open("/tmp/size.txt"):
+              f = line.split()
+              if len(f) == 3 and f[1].isdigit() and f[2].isdigit():
+                  size, addr = int(f[1]), int(f[2])
+                  if addr >= 0x20000000 and addr < 0x20008000:
+                      ram += size
+                      print("RAM   %-16s %6d" % (f[0], size))
+                  elif addr >= 0x6000 and addr < 0x80000:
+                      flash += size
+          print("RAM used %d of %d bytes, free %d" % (ram, ram_total, ram_total - ram))
+          print("Flash (sections) %d bytes" % flash)
+          PY
+            fi' 2>&1 | tee ram.log || true
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pin16-firmware
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            full_binaries/**/*.s37
+            bootloader/variant_binaries/*.s37
+            ota_files/*.bin
+            firmware/firmware.s37
+            firmware/firmware_diag.s37
+            firmware/out/build/debug/BG22Badge.hex
+
+      - name: Upload generated configuration (for audit)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-config
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            firmware/out/autogen
+            firmware/out/config
+            firmware/out/*.mak
+            firmware/out/build/debug/*.map
+
+  release:
+    # Runs only for a tag like v20: attaches the ready-made files to a GitHub Release.
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: pin16-firmware
+          path: dist
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p rel
+          find dist -type f \( -name 'pin16_v*.ota.bin' -o -name 'SOLUM_BTL_FULL*.s37' \) -exec cp {} rel/ \;
+          cp LICENSE-RELEASES.md rel/
+          ls -l rel
+          cat > notes.md <<'EOF'
+          Ready-made files of pin16. Terms of these files: `LICENSE-RELEASES.md` (MIT for the pin16 code, Silicon Labs licence for the SDK parts, Silicon Labs devices only). The source is under GPL-3.0-or-later.
+
+          - `pin16_vN.ota.bin`: update over the web page (tags that already run pin16 or BG22Badge firmware).
+          - `pin16_vN_diag.ota.bin`: same with the diagnostic card.
+          - `SOLUM_BTL_FULL_*.s37`: full image with bootloader for the first flashing over SWD. Back up the factory firmware first, it cannot be restored from here.
+
+          Page: https://steanlab.github.io/pin16/
+          EOF
+          sed -i 's/^          //' notes.md
+          gh release create "$TAG" rel/* --title "pin16 $TAG" --notes-file notes.md
