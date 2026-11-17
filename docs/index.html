@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>pin16 v20</title>
+<title>pin16 v20 · control page for Solum e-paper tags</title>
 <meta name="description" content="pin16: open firmware and a Bluetooth web page for Solum e-paper tags on the EFR32BG22 chip (200x200 and 160x296, four colours). Upload pictures, run a slideshow, write an NFC link, text or Wi-Fi record, update the firmware over Bluetooth. No app, no cloud.">
 <meta name="keywords" content="e-paper, e-ink, ESL, Solum, EFR32BG22, Web Bluetooth, NFC, slideshow, open source firmware, pin16">
 <meta name="author" content="steanlab">
@@ -20,13 +20,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="pin16">
-<meta property="og:title" content="pin16: e-paper tags over Bluetooth">
+<meta property="og:title" content="pin16: control page for Solum e-paper tags (EL016, EL022)">
 <meta property="og:description" content="Upload pictures, run a slideshow, write NFC records and update the firmware of Solum EFR32BG22 e-paper tags from the browser. Open source, GPL-3.0-or-later.">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="ru_RU">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://steanlab.github.io/pin16/icons/og.jpg">
-<meta name="twitter:title" content="pin16: e-paper tags over Bluetooth">
+<meta name="twitter:title" content="pin16: control page for Solum e-paper tags (EL016, EL022)">
 <meta name="twitter:description" content="Upload pictures, run a slideshow, write NFC records and update the firmware of Solum EFR32BG22 e-paper tags from the browser.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -101,6 +101,7 @@ a.lnk,.lnk{color:var(--acc);cursor:pointer;text-decoration:underline;background:
 [hidden]{display:none!important}
 </style></head><body>
 <div class="top"><h1>pin16</h1><span><button id="binst" class="sm" hidden data-t="install"></button><button id="lg" style="margin:0;min-height:36px">RU</button></span></div>
+<p class="mut" data-t="tested"></p>
 <p class="mut" data-t="hint"></p>
 <div>
 <button id="bc" class="p" data-t="connect"></button>
@@ -359,7 +360,7 @@ sg_test:'Colour test',sg_pulse:'Pulse',sg_stop:'Stop',sg_custom:'Own mix (0-255)
 sg_show:'Show for 2 s',c_green:'Green',c_blue:'Blue',c_red:'Red',c_amber:'Amber',c_cyan:'Cyan',c_magenta:'Magenta',c_white:'White',
 id:'Chip ID',showid:'show',hideid:'hide',lastrst:'Last restart',minv:'Lowest under load',lowbat:'Battery is nearly empty: replace the CR2450.',
 rc_por:'power-up',rc_pin:'reset pin',rc_wdog:'watchdog',rc_lock:'lock-up',rc_sys:'restart command',rc_bod:'low supply voltage',rc_em4:'wake from EM4',rc_none:'unknown',
-h_set:'Slideshow and settings',ss_on:'Slideshow on',ss_every:'Change picture every',u_min:'minutes',u_h:'hours',ss_order:'Order',ord0:'In order',ord1:'Random',ss_clean:'Clean the panel',cl0:'never',cl1:'white',cl2:'black, then white',ss_cleann:'every N slides:',ss_hint:'Interval from 1 minute to 18 hours. The pictures of the slideshow are chosen with the checkboxes on the tiles. Cleaning removes ghost images but costs battery.',apply:'Apply',
+tested:'Control page for Solum e-paper tags. Tested with Solum EL016 (200×200) and EL022 (160×296), four colours.',h_demo:'Demo for filming (experimental)',demo_note:'The tag shows its splash, up to two slides you choose, then a screen with its own data, blinks the LEDs and returns to the slide that was shown before. About two minutes; the page disconnects so only the tag is in the frame. A touch of the tag stops it after the current screen.',demo_s1:'Slide 1',demo_s2:'Slide 2',demo_none:'none',demo_go:'Start demo',demo_stop:'Stop demo',demo_started:'Demo started, the page disconnects',demo_stopped:'Stopping after the current screen',h_set:'Slideshow and settings',ss_on:'Slideshow on',ss_every:'Change picture every',u_min:'minutes',u_h:'hours',ss_order:'Order',ord0:'In order',ord1:'Random',ss_clean:'Clean the panel',cl0:'never',cl1:'white',cl2:'black, then white',ss_cleann:'every N slides:',ss_hint:'Interval from 1 minute to 18 hours. The pictures of the slideshow are chosen with the checkboxes on the tiles. Cleaning removes ghost images but costs battery.',apply:'Apply',
 orient:'Picture orientation',o0:'As stored',o1:'Flip vertically',o2:'Flip horizontally',o3:'Rotate 180°',tap:'A tap on the tag also draws the next slide',nm:'Bluetooth name tail',auto:'auto',nm_hint:'The name changes after a restart; then choose the tag in the list again.',
 reboot:'Restart the tag',h_dev:'For developers',copylog:'Copy log',savelog:'Save log to file',clearlog:'Clear log',copied:'copied',
 saved:'Saved',drawn:'Drawn',draw_fail:'Drawing failed',verify_ok:'Picture is intact',verify_bad:'Check failed: {0}',erased:'Slot {0} erased',uploaded:'Slot {0} uploaded',
@@ -415,7 +416,7 @@ sg_test:'Проверка цветов',sg_pulse:'Пульсация',sg_stop:'�
 sg_show:'Показать на 2 с',c_green:'Зелёный',c_blue:'Синий',c_red:'Красный',c_amber:'Янтарный',c_cyan:'Голубой',c_magenta:'Пурпурный',c_white:'Белый',
 id:'ID чипа',showid:'показать',hideid:'скрыть',lastrst:'Последний перезапуск',minv:'Минимум под нагрузкой',lowbat:'Батарея почти села: замените CR2450.',
 rc_por:'включение питания',rc_pin:'вывод сброса',rc_wdog:'сторожевой таймер',rc_lock:'зависание ядра',rc_sys:'команда перезапуска',rc_bod:'низкое напряжение питания',rc_em4:'пробуждение из EM4',rc_none:'неизвестно',
-h_set:'Слайд-шоу и настройки',ss_on:'Слайд-шоу включено',ss_every:'Менять картинку каждые',u_min:'минут',u_h:'часов',ss_order:'Порядок',ord0:'По порядку',ord1:'Случайный',ss_clean:'Очищать панель',cl0:'никогда',cl1:'белым',cl2:'чёрным, потом белым',ss_cleann:'каждые N слайдов:',ss_hint:'Интервал от 1 минуты до 18 часов. Картинки слайд-шоу выбираются галочками на плитках. Очистка убирает «призраки», но расходует батарею.',apply:'Применить',
+tested:'Страница управления для тегов Solum с электронной бумагой. Проверено на Solum EL016 (200×200) и EL022 (160×296), четыре цвета.',h_demo:'Демо для съёмки (экспериментально)',demo_note:'Тег показывает заставку, до двух выбранных слайдов, затем экран со своими данными, мигает светодиодами и возвращает слайд, который был до демо. Около двух минут; страница отключается, чтобы в кадре остался только тег. Касание тега останавливает демо после текущего экрана.',demo_s1:'Слайд 1',demo_s2:'Слайд 2',demo_none:'нет',demo_go:'Запустить демо',demo_stop:'Остановить демо',demo_started:'Демо запущено, страница отключается',demo_stopped:'Остановится после текущего экрана',h_set:'Слайд-шоу и настройки',ss_on:'Слайд-шоу включено',ss_every:'Менять картинку каждые',u_min:'минут',u_h:'часов',ss_order:'Порядок',ord0:'По порядку',ord1:'Случайный',ss_clean:'Очищать панель',cl0:'никогда',cl1:'белым',cl2:'чёрным, потом белым',ss_cleann:'каждые N слайдов:',ss_hint:'Интервал от 1 минуты до 18 часов. Картинки слайд-шоу выбираются галочками на плитках. Очистка убирает «призраки», но расходует батарею.',apply:'Применить',
 orient:'Ориентация картинки',o0:'Как сохранено',o1:'Отразить по вертикали',o2:'Отразить по горизонтали',o3:'Повернуть на 180°',tap:'Прикосновение к тегу рисует следующий слайд',nm:'Окончание имени Bluetooth',auto:'авто',nm_hint:'Имя изменится после перезапуска; потом выберите тег в списке заново.',
 reboot:'Перезапустить тег',h_dev:'Для разработчиков',copylog:'Копировать лог',savelog:'Сохранить лог в файл',clearlog:'Очистить лог',copied:'скопировано',
 saved:'Сохранено',drawn:'Нарисовано',draw_fail:'Не удалось нарисовать',verify_ok:'Картинка целая',verify_bad:'Проверка не прошла: {0}',erased:'Слот {0} стёрт',uploaded:'Слот {0} загружен',
@@ -603,7 +604,14 @@ function nmGet(s,crc){try{const o=JSON.parse(lsGet(nmKey(s))||'null');return o&&
 const inShow=i=>S.mask===0||S.mask===0xFFFFFFFF||((S.mask>>>i)&1)===1;
 function pickFile(s){S.up=s;refreshUi();$('sfile').click()}
 function firstFree(){for(let i=0;i<S.max;i++)if(!S.slots[i])return i;return -1}
+function dmFill(){ // choices for the demo: the filled slots
+  for(const id of ['dm1','dm2']){const s=$(id);if(!s)continue;const cur=s.value;s.textContent='';
+    const o=document.createElement('option');o.value='-1';o.textContent=t('demo_none');s.appendChild(o);
+    Object.keys(S.slots).map(Number).sort((x,y)=>x-y).forEach(k=>{const e=document.createElement('option');e.value=k;e.textContent='#'+k;s.appendChild(e)});
+    if([...s.options].some(o=>o.value===cur))s.value=cur}
+}
 function renderSlots(){
+  dmFill();
   const g=$('tiles');g.textContent='';
   const on=connected&&!opBusy;
   for(let i=0;i<S.max;i++){
@@ -1099,6 +1107,12 @@ const H={
   rset:()=>op(t('a_save'),async()=>{
     await ask([0x4F,1,+$('stx').value],/^TX|^ERR/);await ask([0x4F,4,+$('sled').value],/^LED|^ERR/);await ask([0x4F,6,+$('swt').value,+$('swb').value],/^WINDOWS|^ERR/);toast(t('saved'))}),
   mset:()=>{if(confirm(t('c_mode'))){userDown=true;send([0x4F,5,+$('smode').value]).catch(e=>log('error: '+e.message))}},
+  demo:()=>{
+    const a=+$('dm1').value,b=+$('dm2').value,args=[0x4F,0x1C];
+    if(a>=0){args.push(a);if(b>=0&&b!==a)args.push(b)}else if(b>=0)args.push(b);
+    return op(t('demo_go'),async()=>{await ask(args,/^DEMO start|^ERR/,8000);toast(t('demo_started'));return true}).then(ok=>{if(ok)$('bd').onclick()});
+  },
+  demostop:()=>op(t('demo_stop'),async()=>{await ask([0x4F,0x1D],/^DEMO|^ERR/,6000);toast(t('demo_stopped'))}),
   bat:dv([0x4F,0x0E]), idrc:dv([0x4F,0x0D]), hwcard:dv([0x4F,0x0F]),
   splset:()=>op(t('a_save'),async()=>{await ask([0x4F,0x12,$('ssplash').checked?0:1],/^SPLASH|^ERR/,6000);toast(t('saved'))}),
   btset:()=>{
