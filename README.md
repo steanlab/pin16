@@ -2,6 +2,12 @@
 
 Open firmware and a control page for small e-paper tags that look like badges: **load pictures over Bluetooth LE from a web page, show them as a slideshow**, no SWD flashing for every picture. Russian version: `README.ru.md`.
 
+
+
+https://github.com/user-attachments/assets/f2161c3a-fb10-48aa-aaed-c404dbc2ec73
+
+
+
 Supported tags (EFR32BG22C224F512IM40, CR2450, NFC, external 512 KB SPI flash):
 
 | Tag | Panel | Size | Colours |
